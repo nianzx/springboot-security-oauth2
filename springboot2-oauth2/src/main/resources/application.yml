@@ -1,0 +1,27 @@
+
+#mybatis
+mybatis:
+  mapperLocations: classpath*:mapper/**/*.xml
+  typeAliasesPackage: cn.nianzx.**.domain
+
+#更多配置请参考https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=GMT%2B8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+
+#生产环境prod，测试环境test，开发环境dev，用来区分要不要打印日志
+#prod：控制台和log都不会打印日志，只有当error日志才会打印到log中
+#test：控制台和log都会打印日志，这个是最全的
+#dev：控制台会打印日志，log不打印日志
+  profiles:
+    active: dev
+#redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3600
+    database: 2
