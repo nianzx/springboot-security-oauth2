@@ -28,10 +28,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
         MyUserDetails user = (MyUserDetails) userDetailsService.loadUserByUsername(username);
 
-        //验证账号
-        if (user.getUsername() == null) {
-            throw new BadCredentialsException("用户名不存在");
-        }
         //验证密码
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if (password == null || !bCryptPasswordEncoder.matches(password, user.getPassword())) {

@@ -1,16 +1,13 @@
 package cn.nianzx.common.authorization;
 
-import cn.nianzx.domain.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
- * 自定义UserDetails，需要按实际情况定制
+ * 自定义UserDetails
  * Created by nianzx on 2019/1/29.
  */
 public class MyUserDetails implements UserDetails {
@@ -21,27 +18,19 @@ public class MyUserDetails implements UserDetails {
         this.user = user;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //添加权限，需要自定义,这里为了演示方便，写死管理员和用户两个权限
-        List<SimpleGrantedAuthority> authorisList = new ArrayList<>();
-        if (user != null && user.getUserCode().equals("admin")) {
-            authorisList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
-            authorisList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        return authorisList;
+        return user.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return user.getPwd();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return user.getUsername();
     }
 
     /**
@@ -51,7 +40,7 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return user.getAccountNotExpired();
+        return user.isAccountNonExpired();
     }
 
     /**
@@ -61,7 +50,7 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return user.getAccountNotLocked();
+        return user.isAccountNonLocked();
     }
 
     /**
@@ -71,7 +60,7 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return user.getCredentialsNonExpired();
+        return user.isCredentialsNonExpired();
     }
 
     /**
@@ -81,14 +70,7 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return user.getEnabled();
+        return user.isEnabled();
     }
 
-    public Integer getAge() {
-        return user.getAge();
-    }
-
-    public String getSex() {
-        return user.getSex();
-    }
 }
